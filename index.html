@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>우리학교 시험장 안내</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app" aria-label="우리학교 시험장 안내">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">▱</span>
+          <div>
+            <p>시험장 안내</p>
+            <h1>우리학교 시험장 안내</h1>
+          </div>
+        </div>
+
+        <nav class="floor-tabs" aria-label="층 선택">
+          <button class="is-active" type="button" data-floor="1">1층</button>
+          <button type="button" data-floor="2">2층</button>
+          <button type="button" data-floor="3">3층</button>
+          <button type="button" data-floor="4">4층</button>
+          <button type="button" data-floor="annex">부속</button>
+        </nav>
+      </header>
+
+      <section class="workspace">
+        <div class="map-shell">
+          <canvas id="schoolMap" aria-label="3D 교실 배치도"></canvas>
+
+          <div class="map-overlay map-status" aria-live="polite">
+            <span>현재 위치</span>
+            <strong id="currentLocation">중앙현관</strong>
+          </div>
+
+          <div class="map-overlay map-tools" aria-label="보기 조작">
+            <button id="homeView" type="button" title="처음 시점">↺</button>
+            <button id="zoomIn" type="button" title="확대">＋</button>
+            <button id="zoomOut" type="button" title="축소">－</button>
+          </div>
+
+          <div id="mapFallback" class="fallback" hidden>
+            3D 장면을 불러오지 못했습니다.
+          </div>
+        </div>
+
+        <aside class="side-panel" aria-label="시험장 정보">
+          <div class="side-tabs" role="tablist" aria-label="시험장 정보 보기">
+            <button class="is-active" id="lookupTab" type="button" role="tab" aria-selected="true" aria-controls="lookupPanel" data-side-tab="lookup">학생 검색</button>
+            <button id="spaceTab" type="button" role="tab" aria-selected="false" aria-controls="spacePanel" data-side-tab="space">선택 공간</button>
+          </div>
+
+          <section id="lookupPanel" class="info-section lookup-section tab-panel" role="tabpanel" aria-labelledby="lookupTab" data-side-panel="lookup">
+            <div class="section-title">
+              <span>학생 시험장 찾기</span>
+              <strong>오늘</strong>
+            </div>
+            <form id="studentSearchForm" class="student-search">
+              <label for="studentSearchInput">이름 검색</label>
+              <div class="search-row">
+                <input id="studentSearchInput" type="search" autocomplete="off" placeholder="예: 김민준">
+                <button id="studentSearchButton" type="submit">검색</button>
+              </div>
+            </form>
+            <div id="quickStudents" class="quick-students" aria-label="샘플 학생"></div>
+            <p id="lookupMessage" class="lookup-message" aria-live="polite">샘플 이름을 눌러 오늘 시험장을 확인해 보세요.</p>
+            <div id="studentResult" class="student-result"></div>
+          </section>
+
+          <section id="spacePanel" class="info-section selected-room tab-panel" role="tabpanel" aria-labelledby="spaceTab" data-side-panel="space" hidden>
+            <div class="section-title">
+              <span>선택 공간</span>
+              <strong id="selectedFloor">1층</strong>
+            </div>
+            <h2 id="roomName">중앙현관</h2>
+            <dl>
+              <div>
+                <dt>구역</dt>
+                <dd id="roomZone">본관 1층</dd>
+              </div>
+              <div>
+                <dt>용도</dt>
+                <dd id="roomUse">출입 / 안내</dd>
+              </div>
+              <div>
+                <dt>경로</dt>
+                <dd id="roomRoute">중앙현관에서 출발</dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="info-section">
+            <div class="section-title">
+              <span>오늘의 주요 시험실</span>
+              <strong id="agendaCount">4</strong>
+            </div>
+            <div id="agendaList" class="agenda-list"></div>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <script src="vendor/three.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
